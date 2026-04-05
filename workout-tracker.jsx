@@ -11,7 +11,7 @@ const program = [
     exercises: [
       { name: "Pull Up", url: `${SITE}pull-up`, sets: "3", reps: "6-12", note: null },
       { name: "Dumbbell Bench Press", url: `${SITE}dumbbell-bench-press.html`, sets: "4", reps: "10", note: null },
-      { name: "Landmine T-Bar Row", url: `${SITE}landmine-t-bar-row`, sets: "3", reps: "10", note: null },
+      { name: "Landmine T-Bar Row", url: `${SITE}bent-over-row.html`, sets: "3", reps: "10", note: null },
       { name: "Landmine Press", url: `${SITE}single-arm-landmine-press`, sets: "3", reps: "10", note: "🔄 Замість Standing DB Press — менше стресу на плечовий суглоб і хребет" },
       { name: "Seated Cable Row", url: `${SITE}seated-cable-row.html`, sets: "2", reps: "10", note: null },
       { name: "Dumbbell Lateral Raise", url: `${SITE}dumbbell-lateral-raise.html`, sets: "2", reps: "12", note: null },
@@ -27,13 +27,13 @@ const program = [
     warmup: null,
     exercises: [
       { name: "Dumbbell Goblet Squat", url: `${SITE}dumbbell-goblet-squat`, sets: "4", reps: "10", note: null },
-      { name: "Banded Nordic Hamstring Curl", url: `${SITE}nordic-hamstring-curl`, sets: "2", reps: "10", note: null },
-      { name: "Romanian Deadlift", url: `${SITE}romanian-deadlift.html`, sets: "3", reps: "10", note: null },
-      { name: "Leg Press", url: `${SITE}leg-press.html`, sets: "3", reps: "12", note: null },
+      { name: "Banded Nordic Hamstring Curl", url: `${SITE}nordic-hamstring-curl-bodyweight`, sets: "2", reps: "10", note: null },
+      { name: "Romanian Deadlift", url: `${SITE}romanian-deadlift`, sets: "3", reps: "10", note: null },
+      { name: "Leg Press", url: `${SITE}45-degree-leg-press.html`, sets: "3", reps: "12", note: null },
       { name: "Barbell Hip Thrust", url: `${SITE}barbell-hip-thrust.html`, sets: "2", reps: "10", note: null },
       { name: "Standing Calf Raise", url: `${SITE}standing-machine-calf-raise.html`, sets: "3", reps: "12", note: null },
       { name: "Hanging Leg Raise", url: `${SITE}hanging-leg-raise.html`, sets: "2", reps: "15", note: null },
-      { name: "Exercise Ball Crunch", url: `${SITE}exercise-ball-crunch.html`, sets: "2", reps: "15", note: null },
+      { name: "Exercise Ball Crunch", url: `${SITE}swiss-ball-crunch.html`, sets: "2", reps: "15", note: null },
     ],
   },
   {
@@ -46,9 +46,9 @@ const program = [
       { name: "Incline Dumbbell Bench Press", url: `${SITE}incline-dumbbell-bench-press.html`, sets: "3", reps: "10", note: null },
       { name: "One Arm Dumbbell Row", url: `${SITE}one-arm-dumbbell-row.html`, sets: "3", reps: "10", note: "Унілатеральна тяга — вирівнює дисбаланс лівого/правого боку" },
       { name: "Seated Dumbbell Press", url: `${SITE}seated-dumbbell-press.html`, sets: "3", reps: "10", note: "🔄 З опорою спини — безпечніше для хребта при сколіозі" },
-      { name: "Machine Fly", url: `${SITE}machine-fly.html`, sets: "2", reps: "12", note: null },
-      { name: "Cable Rope Curl", url: `${SITE}cable-rope-hammer-curl`, sets: "2", reps: "10", note: null },
-      { name: "Cable Tricep Pushdown", url: `${SITE}tricep-rope-pushdown.html`, sets: "2", reps: "10", note: null },
+      { name: "Machine Fly", url: `${SITE}pec-dec.html`, sets: "2", reps: "12", note: null },
+      { name: "Cable Rope Curl", url: `${SITE}rope-cable-curl.html`, sets: "2", reps: "10", note: null },
+      { name: "Cable Tricep Pushdown", url: `${SITE}rope-tricep-extension.html`, sets: "2", reps: "10", note: null },
       { name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "⚡ Обов'язково кожен upper day — ключова вправа для твоєї лопатки" },
       { name: "Reverse Dumbbell Curl", url: `${SITE}standing-dumbbell-reverse-curl.html`, sets: "2", reps: "10", note: null },
     ],
@@ -64,29 +64,29 @@ const program = [
       { name: "Exercise Ball Leg Curl", url: `${SITE}exercise-ball-leg-curl.html`, sets: "3", reps: "10", note: null },
       { name: "Leg Extension", url: `${SITE}leg-extension.html`, sets: "3", reps: "10", note: null },
       { name: "Hyperextension (Glute Focus)", url: `${SITE}hyperextension.html`, sets: "2", reps: "12", note: null },
-      { name: "Bulgarian Split Squat", url: `${SITE}dumbbell-bulgarian-split-squat`, sets: "2", reps: "10", note: null },
+      { name: "Bulgarian Split Squat", url: `${SITE}one-leg-dumbbell-squat-aka-bulgarian-squat.html`, sets: "2", reps: "10", note: null },
       { name: "Seated Calf Raise", url: `${SITE}seated-calf-raise.html`, sets: "2", reps: "15", note: null },
       { name: "Plank", url: `${SITE}front-plank.html`, sets: "3", reps: "30s", note: null },
     ],
   },
 ];
 
-const PROGRAM_URL = "https://www.muscleandstrength.com/workouts/advanced-upper-lower-4-day-split";
+const PROGRAM_URL = "https://www.muscleandstrength.com/workouts/4-day-advanced-upper-lower-workout-program-to-build-mass";
 
 const TERM_LINKS = {
-  "Foam Roller": `${SITE}foam-roller-upper-back`,
-  "Wall Slides": `${SITE}wall-slide`,
+  "Foam Roller": `${SITE}thoracic-extension-on-foam-roller`,
+  "Wall Slides": `${SITE}scapular-wall-slide`,
   "Standing DB Press": `${SITE}standing-dumbbell-press.html`,
   "Shrug": `${SITE}barbell-shrug.html`,
   "Shrugs": `${SITE}barbell-shrug.html`,
   "Band Pull-Aparts": `${SITE}band-pull-apart`,
   "Унілатеральна тяга": `https://en.wikipedia.org/wiki/Unilateral_training`,
-  "Sumo Deadlift": `${SITE}sumo-deadlift.html`,
+  "Sumo Deadlift": `${SITE}sumo-deadlift`,
   "Face Pulls": `${SITE}cable-face-pull`,
   "Landmine": `${SITE}single-arm-landmine-press`,
   "Seated": `${SITE}seated-dumbbell-press.html`,
-  "мінімум 2:1": `https://www.muscleandstrength.com/articles/push-pull-ratio`,
-  "Upright Rows": `${SITE}barbell-upright-row.html`,
+  "мінімум 2:1": `https://missionmvmt.com/push-pull-ratio-prevents-shoulder-injuries/`,
+  "Upright Rows": `${SITE}upright-row.html`,
 };
 
 function linkify(text) {
