@@ -71,6 +71,59 @@ const program = [
   },
 ];
 
+const PROGRAM_URL = "https://www.muscleandstrength.com/workouts/advanced-upper-lower-4-day-split";
+
+const TERM_LINKS = {
+  "Foam Roller": `${SITE}foam-roller-upper-back`,
+  "Wall Slides": `${SITE}wall-slide`,
+  "Standing DB Press": `${SITE}standing-dumbbell-press.html`,
+  "Shrug": `${SITE}barbell-shrug.html`,
+  "Shrugs": `${SITE}barbell-shrug.html`,
+  "Band Pull-Aparts": `${SITE}band-pull-apart`,
+  "Унілатеральна тяга": `https://en.wikipedia.org/wiki/Unilateral_training`,
+  "Sumo Deadlift": `${SITE}sumo-deadlift.html`,
+  "Face Pulls": `${SITE}cable-face-pull`,
+  "Landmine": `${SITE}single-arm-landmine-press`,
+  "Seated": `${SITE}seated-dumbbell-press.html`,
+  "мінімум 2:1": `https://www.muscleandstrength.com/articles/push-pull-ratio`,
+  "Upright Rows": `${SITE}barbell-upright-row.html`,
+};
+
+function linkify(text) {
+  const terms = Object.keys(TERM_LINKS).sort((a, b) => b.length - a.length);
+  const parts = [];
+  let remaining = text;
+  let keyIdx = 0;
+
+  while (remaining) {
+    let earliestIdx = Infinity;
+    let matchedTerm = null;
+
+    for (const term of terms) {
+      const idx = remaining.indexOf(term);
+      if (idx !== -1 && idx < earliestIdx) {
+        earliestIdx = idx;
+        matchedTerm = term;
+      }
+    }
+
+    if (matchedTerm === null) {
+      parts.push(remaining);
+      break;
+    }
+
+    if (earliestIdx > 0) parts.push(remaining.slice(0, earliestIdx));
+    parts.push(
+      <a key={keyIdx++} href={TERM_LINKS[matchedTerm]} target="_blank" rel="noopener noreferrer" className="wt-term-link">{matchedTerm}</a>
+    );
+    remaining = remaining.slice(earliestIdx + matchedTerm.length);
+  }
+
+  return parts;
+}
+
+const TOTAL_WEEKS = 12;
+
 const CheckIcon = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
     <path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -80,26 +133,42 @@ const CheckIcon = () => (
 export default function WorkoutTracker() {
   const [checked, setChecked] = useState({});
   const [expanded, setExpanded] = useState({ 0: true, 1: false, 2: false, 3: false });
+  const [week, setWeek] = useState(1);
+  const [extraSets, setExtraSets] = useState({});
 
   const toggleSet = (dayIdx, exIdx, setIdx) => {
     const key = `${dayIdx}-${exIdx}-${setIdx}`;
     setChecked((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const resetAll = () => setChecked({});
+  const resetAll = () => {
+    setChecked({});
+    setExtraSets({});
+    setWeek((prev) => Math.min(prev + 1, TOTAL_WEEKS));
+  };
 
   const toggleDay = (idx) => {
     setExpanded((prev) => ({ ...prev, [idx]: !prev[idx] }));
   };
 
-  const totalSets = program.reduce((s, d) => s + d.exercises.reduce((s2, ex) => s2 + parseInt(ex.sets), 0), 0);
+  const getEffectiveSets = (dayIdx, exIdx, baseSets) => {
+    return baseSets + (extraSets[`${dayIdx}-${exIdx}`] || 0);
+  };
+
+  const addSet = (dayIdx, exIdx) => {
+    const key = `${dayIdx}-${exIdx}`;
+    setExtraSets((prev) => ({ ...prev, [key]: (prev[key] || 0) + 1 }));
+  };
+
+  const totalSets = program.reduce((s, d, dIdx) =>
+    s + d.exercises.reduce((s2, ex, eIdx) => s2 + getEffectiveSets(dIdx, eIdx, parseInt(ex.sets)), 0), 0);
   const totalChecked = Object.values(checked).filter(Boolean).length;
 
   const getDayProgress = (dayIdx) => {
     const day = program[dayIdx];
     let done = 0, total = 0;
     day.exercises.forEach((ex, exIdx) => {
-      const sets = parseInt(ex.sets);
+      const sets = getEffectiveSets(dayIdx, exIdx, parseInt(ex.sets));
       total += sets;
       for (let s = 0; s < sets; s++) {
         if (checked[`${dayIdx}-${exIdx}-${s}`]) done++;
@@ -141,11 +210,55 @@ export default function WorkoutTracker() {
           color: var(--text, #e2e0dc);
           margin: 0 0 4px;
         }
+        .wt-title-link {
+          color: inherit;
+          text-decoration: none;
+          border-bottom: 1px dotted rgba(255,255,255,0.2);
+          transition: all 0.15s;
+        }
+        .wt-title-link:hover {
+          color: #5BA3F5;
+          border-bottom-color: #5BA3F5;
+        }
         .wt-sub {
           font-size: 12px;
           color: var(--text-secondary, #8a8780);
           letter-spacing: 0.5px;
           text-transform: uppercase;
+        }
+        .wt-week-bar {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-top: 12px;
+        }
+        .wt-week-label {
+          font-size: 12px;
+          font-weight: 700;
+          color: #3A6FD8;
+          min-width: 80px;
+        }
+        .wt-week-dots {
+          display: flex;
+          gap: 4px;
+          flex: 1;
+        }
+        .wt-week-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.08);
+          flex: 1;
+          max-width: 20px;
+          border-radius: 3px;
+          transition: all 0.3s;
+        }
+        .wt-week-dot.filled {
+          background: rgba(58, 111, 216, 0.4);
+        }
+        .wt-week-dot.current {
+          background: #3A6FD8;
+          box-shadow: 0 0 6px rgba(58, 111, 216, 0.5);
         }
         .wt-stats {
           display: flex;
@@ -326,10 +439,42 @@ export default function WorkoutTracker() {
           border-color: #2D8F6F;
           color: #fff;
         }
+        .wt-add-set {
+          width: 28px;
+          height: 28px;
+          min-width: 28px;
+          border-radius: 6px;
+          border: 2px dashed rgba(255,255,255,0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.2s;
+          font-size: 14px;
+          font-weight: 700;
+          color: var(--text-secondary, #8a8780);
+          background: transparent;
+          user-select: none;
+        }
+        .wt-add-set:hover {
+          border-color: #3A6FD8;
+          color: #3A6FD8;
+          background: rgba(58, 111, 216, 0.08);
+        }
         .wt-sets-label {
           font-size: 11px;
           color: var(--text-secondary, #8a8780);
           margin-left: 4px;
+        }
+        .wt-term-link {
+          color: #5BA3F5;
+          text-decoration: none;
+          border-bottom: 1px dotted rgba(91, 163, 245, 0.3);
+          transition: all 0.15s;
+        }
+        .wt-term-link:hover {
+          color: #7db8f7;
+          border-bottom-color: #7db8f7;
         }
         .wt-note {
           font-size: 11px;
@@ -364,14 +509,24 @@ export default function WorkoutTracker() {
       `}</style>
 
       <div className="wt-header">
-        <h1 className="wt-title">Advanced Upper / Lower</h1>
+        <h1 className="wt-title">
+          <a href={PROGRAM_URL} target="_blank" rel="noopener noreferrer" className="wt-title-link">Advanced Upper / Lower</a>
+        </h1>
         <div className="wt-sub">M&S Program · Adapted for Scoliosis</div>
+        <div className="wt-week-bar">
+          <span className="wt-week-label">Week {week}/{TOTAL_WEEKS}</span>
+          <div className="wt-week-dots">
+            {Array.from({ length: TOTAL_WEEKS }, (_, i) => (
+              <div key={i} className={`wt-week-dot ${i < week ? "filled" : ""} ${i === week - 1 ? "current" : ""}`} />
+            ))}
+          </div>
+        </div>
         <div className="wt-stats">
           <div className="wt-progress-bar">
             <div className="wt-progress-fill" style={{ width: `${totalSets ? (totalChecked / totalSets) * 100 : 0}%` }} />
           </div>
           <div className="wt-progress-text">{totalChecked}/{totalSets}</div>
-          <button className="wt-reset" onClick={resetAll}>Reset</button>
+          <button className="wt-reset" onClick={resetAll}>Reset · Week {week < TOTAL_WEEKS ? week + 1 : week}</button>
         </div>
       </div>
 
@@ -391,11 +546,11 @@ export default function WorkoutTracker() {
                 {day.warmup && (
                   <div className="wt-warmup">
                     <div className="wt-warmup-label">🔥 Розминка перед тренуванням</div>
-                    {day.warmup}
+                    {linkify(day.warmup)}
                   </div>
                 )}
                 {day.exercises.map((ex, exIdx) => {
-                  const sets = parseInt(ex.sets);
+                  const sets = getEffectiveSets(dayIdx, exIdx, parseInt(ex.sets));
                   const doneSets = getExerciseDone(dayIdx, exIdx, sets);
                   const allDone = doneSets === sets;
                   return (
@@ -418,9 +573,10 @@ export default function WorkoutTracker() {
                               </div>
                             );
                           })}
+                          <div className="wt-add-set" onClick={() => addSet(dayIdx, exIdx)}>+</div>
                           <span className="wt-sets-label">{doneSets}/{sets}</span>
                         </div>
-                        {ex.note && <div className="wt-note">{ex.note}</div>}
+                        {ex.note && <div className="wt-note">{linkify(ex.note)}</div>}
                       </div>
                     </div>
                   );
@@ -434,11 +590,11 @@ export default function WorkoutTracker() {
       <div className="wt-footer">
         <div className="wt-footer-title">⚠️ Ключові правила</div>
         <div className="wt-footer-text">
-          • Face Pulls — кожен upper day, без виключень<br />
-          • Жими над головою — тільки Landmine або Seated з опорою<br />
+          • {linkify("Face Pulls")} — кожен upper day, без виключень<br />
+          • Жими над головою — тільки {linkify("Landmine")} або {linkify("Seated")} з опорою<br />
           • Якщо плече болить при вправі — зупинись і заміни<br />
-          • Тяги : Жими = мінімум 2:1<br />
-          • Ніяких Shrugs / Upright Rows — верхня трапеція і так перевантажена
+          • Тяги : Жими = {linkify("мінімум 2:1")}<br />
+          • Ніяких {linkify("Shrugs")} / {linkify("Upright Rows")} — верхня трапеція і так перевантажена
         </div>
       </div>
     </div>
