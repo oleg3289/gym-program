@@ -1,4 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+const STORAGE_KEY = "gym-program-state";
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+function saveState(state) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+}
 
 const SITE = "https://www.muscleandstrength.com/exercises/";
 
@@ -131,10 +144,15 @@ const CheckIcon = () => (
 );
 
 export default function WorkoutTracker() {
-  const [checked, setChecked] = useState({});
+  const saved = loadState();
+  const [checked, setChecked] = useState(saved?.checked ?? {});
   const [expanded, setExpanded] = useState({ 0: true, 1: false, 2: false, 3: false });
-  const [week, setWeek] = useState(1);
-  const [extraSets, setExtraSets] = useState({});
+  const [week, setWeek] = useState(saved?.week ?? 1);
+  const [extraSets, setExtraSets] = useState(saved?.extraSets ?? {});
+
+  useEffect(() => {
+    saveState({ checked, week, extraSets });
+  }, [checked, week, extraSets]);
 
   const toggleSet = (dayIdx, exIdx, setIdx) => {
     const key = `${dayIdx}-${exIdx}-${setIdx}`;
