@@ -24,8 +24,8 @@ const program = [
     exercises: [
       { name: "Pull Up", url: `${SITE}pull-up`, sets: "3", reps: "6-12", note: null },
       { name: "Dumbbell Bench Press", url: `${SITE}dumbbell-bench-press.html`, sets: "4", reps: "10", note: null },
-      { name: "Landmine T-Bar Row", url: `${SITE}bent-over-row.html`, sets: "3", reps: "10", note: null },
-      { name: "Landmine Press", url: `${SITE}single-arm-landmine-press`, sets: "3", reps: "10", note: "🔄 Замість Standing DB Press — менше стресу на плечовий суглоб і хребет" },
+      { name: "Chest Supported DB Row", url: `${SITE}chest-supported-dumbbell-row`, sets: "3", reps: "10", note: "🔄 Замість Landmine T-Bar Row — chest support прибирає навантаження з хребта" },
+      { name: "Single Arm Cable Lateral Raise", url: `${SITE}one-arm-cable-lateral-raise.html`, sets: "3", reps: "10", note: "🔄 Замість Landmine Press — ізоляція бічної дельти, безпечніше для плеча" },
       { name: "Seated Cable Row", url: `${SITE}seated-row.html`, sets: "2", reps: "10", note: null },
       { name: "Dumbbell Lateral Raise", url: `${SITE}dumbbell-lateral-raise.html`, sets: "2", reps: "12", note: null },
       { name: "Barbell Curl", url: `${SITE}standing-barbell-curl.html`, sets: "2", reps: "10", note: null },
