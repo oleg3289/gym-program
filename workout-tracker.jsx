@@ -27,7 +27,7 @@ const program = [
       { name: "Chest Supported DB Row", url: `${SITE}chest-supported-dumbbell-row`, sets: "3", reps: "10", note: "🔄 Замість Landmine T-Bar Row — chest support прибирає навантаження з хребта" },
       { name: "Single Arm Cable Lateral Raise", url: `${SITE}one-arm-cable-lateral-raise.html`, sets: "3", reps: "10", note: "🔄 Замість Landmine Press — ізоляція бічної дельти, безпечніше для плеча" },
       { name: "Seated Cable Row", url: `${SITE}seated-row.html`, sets: "2", reps: "10", note: null },
-      { name: "Dumbbell Lateral Raise", url: `${SITE}dumbbell-lateral-raise.html`, sets: "2", reps: "12", note: null },
+      { name: "Seated Dumbbell Press", url: `${SITE}seated-dumbbell-press.html`, sets: "2", reps: "10", note: "⚡ З опорою спини — зберігає жимовий паттерн без ризику для плеча" },
       { name: "Barbell Curl", url: `${SITE}standing-barbell-curl.html`, sets: "2", reps: "10", note: null },
       { name: "French Press", url: `${SITE}lying-tricep-extension.html`, sets: "2", reps: "10", note: null },
       { name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "🔄 Замість Shrug — працює нижня трапеція і зовнішні ротатори" },
@@ -37,7 +37,7 @@ const program = [
     day: "Day 2 — Lower Body A",
     tag: "THU",
     color: "#2D8F6F",
-    warmup: null,
+    warmup: "Glute Bridge 2×10 → Cat-Cow 1 хв",
     exercises: [
       { name: "Leg Extension", url: `${SITE}leg-extension.html`, sets: "4", reps: "10", note: "🔄 Замість Goblet Squat — без осьового навантаження на хребет" },
       { name: "Resistance Band Leg Curl", url: `${SITE}leg-curl.html`, sets: "2", reps: "10", note: "🔄 Замість Nordic Curl — лежачи з гумкою, без навантаження на поперек" },
@@ -77,7 +77,7 @@ const program = [
     day: "Day 4 — Lower Body B",
     tag: "SUN",
     color: "#8B5CF6",
-    warmup: null,
+    warmup: "Glute Bridge 2×10 → Cat-Cow 1 хв",
     exercises: [
       { name: "Hack Squat", url: `${SITE}hack-squat.html`, sets: "4", reps: "10", note: "🔄 Замість Trap Bar Deadlift — підтримка спини, без осьового навантаження" },
       { name: "Smith Machine Squat", url: `${SITE}smith-machine-squat.html`, sets: "3", reps: "10", note: "🔄 Замість Front Squat — фіксована траєкторія, безпечніше для поперека" },
@@ -87,6 +87,8 @@ const program = [
       { name: "Bulgarian Split Squat", url: `${SITE}one-leg-dumbbell-squat-aka-bulgarian-squat.html`, sets: "2", reps: "10", note: null },
       { name: "Leg Press Calf Raise", url: `${SITE}45-degress-calf-press.html`, sets: "2", reps: "15", note: null },
       { name: "Plank", url: `${SITE}hover.html`, sets: "3", reps: "30s", note: null },
+      { name: "Pallof Press", url: `${SITE}pallof-press`, sets: "3", reps: "10", note: "⚡ Антиротація — стабілізація хребта при сколіозі" },
+      { name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10", note: null },
       { name: "Hip Abduction Machine", url: `${SITE}hip-abduction-machine.html`, sets: "3", reps: "12", note: "⚡ Gluteus medius — ключовий м'яз для корекції APT" },
     ],
     cooldown: [
@@ -113,6 +115,8 @@ const TERM_LINKS = {
   "Seated": `${SITE}seated-dumbbell-press.html`,
   "мінімум 2:1": `https://missionmvmt.com/push-pull-ratio-prevents-shoulder-injuries/`,
   "Upright Rows": `${SITE}upright-row.html`,
+  "Glute Bridge": `${SITE}bodyweight-glute-bridge`,
+  "Cat-Cow": `https://www.healthline.com/health/cat-cow-stretch`,
 };
 
 function linkify(text) {
@@ -189,6 +193,15 @@ export default function WorkoutTracker() {
   const addSet = (dayIdx, exIdx) => {
     const key = `${dayIdx}-${exIdx}`;
     setExtraSets((prev) => ({ ...prev, [key]: (prev[key] || 0) + 1 }));
+  };
+
+  const removeSet = (dayIdx, exIdx, baseSets) => {
+    const key = `${dayIdx}-${exIdx}`;
+    const current = baseSets + (extraSets[key] || 0);
+    if (current <= 1) return;
+    const removedIdx = current - 1;
+    setChecked((prev) => { const next = { ...prev }; delete next[`${dayIdx}-${exIdx}-${removedIdx}`]; return next; });
+    setExtraSets((prev) => ({ ...prev, [key]: (prev[key] || 0) - 1 }));
   };
 
   const totalSets = program.reduce((s, d, dIdx) =>
@@ -470,6 +483,28 @@ export default function WorkoutTracker() {
           border-color: #2D8F6F;
           color: #fff;
         }
+        .wt-remove-set {
+          width: 28px;
+          height: 28px;
+          min-width: 28px;
+          border-radius: 6px;
+          border: 2px dashed rgba(255,255,255,0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.2s;
+          font-size: 14px;
+          font-weight: 700;
+          color: var(--text-secondary, #8a8780);
+          background: transparent;
+          user-select: none;
+        }
+        .wt-remove-set:hover {
+          border-color: #E8553A;
+          color: #E8553A;
+          background: rgba(232, 85, 58, 0.08);
+        }
         .wt-add-set {
           width: 28px;
           height: 28px;
@@ -627,6 +662,7 @@ export default function WorkoutTracker() {
                               </div>
                             );
                           })}
+                          {sets > 1 && <div className="wt-remove-set" onClick={() => removeSet(dayIdx, exIdx, parseInt(ex.sets))}>−</div>}
                           <div className="wt-add-set" onClick={() => addSet(dayIdx, exIdx)}>+</div>
                           <span className="wt-sets-label">{doneSets}/{sets}</span>
                         </div>
