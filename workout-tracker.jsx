@@ -48,6 +48,12 @@ const program = [
       { name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10", note: null },
       { name: "Pallof Press", url: `${SITE}pallof-press`, sets: "3", reps: "10", note: "⚡ Антиротація — ключова для стабілізації хребта при сколіозі" },
       { name: "Ab Crunch", url: `${SITE}ab-crunch`, sets: "3", reps: "10-15", note: null },
+      { name: "Hip Abduction Machine", url: `${SITE}hip-abduction-machine.html`, sets: "3", reps: "12", note: "⚡ Gluteus medius — ключовий м'яз для корекції APT" },
+    ],
+    cooldown: [
+      { name: "Kneeling Hip Flexor Stretch", url: "https://www.youtube.com/watch?v=Y7gvRhnV3iM&t=195", sets: "2", reps: "45-60s" },
+      { name: "Child Pose Stretch", url: "https://www.youtube.com/watch?v=Y7gvRhnV3iM&t=195", sets: "2", reps: "45-60s" },
+      { name: "Double Knee Chest Stretch", url: "https://www.youtube.com/watch?v=Y7gvRhnV3iM&t=195", sets: "2", reps: "45-60s" },
     ],
   },
   {
@@ -81,6 +87,12 @@ const program = [
       { name: "Bulgarian Split Squat", url: `${SITE}one-leg-dumbbell-squat-aka-bulgarian-squat.html`, sets: "2", reps: "10", note: null },
       { name: "Leg Press Calf Raise", url: `${SITE}45-degress-calf-press.html`, sets: "2", reps: "15", note: null },
       { name: "Plank", url: `${SITE}hover.html`, sets: "3", reps: "30s", note: null },
+      { name: "Hip Abduction Machine", url: `${SITE}hip-abduction-machine.html`, sets: "3", reps: "12", note: "⚡ Gluteus medius — ключовий м'яз для корекції APT" },
+    ],
+    cooldown: [
+      { name: "Kneeling Hip Flexor Stretch", url: "https://www.youtube.com/watch?v=Y7gvRhnV3iM&t=195", sets: "2", reps: "45-60s" },
+      { name: "Child Pose Stretch", url: "https://www.youtube.com/watch?v=Y7gvRhnV3iM&t=195", sets: "2", reps: "45-60s" },
+      { name: "Double Knee Chest Stretch", url: "https://www.youtube.com/watch?v=Y7gvRhnV3iM&t=195", sets: "2", reps: "45-60s" },
     ],
   },
 ];
@@ -505,6 +517,29 @@ export default function WorkoutTracker() {
           border-radius: 4px;
         }
 
+        .wt-cooldown-header {
+          margin: 12px 16px 4px;
+          padding: 8px 14px;
+          background: rgba(100, 180, 255, 0.06);
+          border: 1px dashed rgba(100, 180, 255, 0.2);
+          border-radius: 8px;
+        }
+        .wt-cooldown-label {
+          font-weight: 700;
+          font-size: 10px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          color: #6bb8f0;
+        }
+        .wt-cooldown-row {
+          opacity: 0.85;
+        }
+        .wt-meta-cooldown {
+          font-size: 12px;
+          color: var(--text-secondary, #8a8780);
+          margin-top: 2px;
+        }
+
         .wt-footer {
           margin-top: 20px;
           padding: 16px;
@@ -600,6 +635,24 @@ export default function WorkoutTracker() {
                     </div>
                   );
                 })}
+                {day.cooldown && (
+                  <>
+                    <div className="wt-cooldown-header">
+                      <div className="wt-cooldown-label">🧊 Cooldown — APT Correction</div>
+                    </div>
+                    {day.cooldown.map((ex, cIdx) => (
+                      <div className="wt-row wt-cooldown-row" key={`cd-${cIdx}`}>
+                        <div className="wt-info">
+                          <div className="wt-name">
+                            <a href={ex.url} target="_blank" rel="noopener noreferrer">{ex.name}</a>
+                            <span className="wt-reps-label">× {ex.reps}</span>
+                          </div>
+                          <div className="wt-meta-cooldown">{ex.sets} sets</div>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                )}
               </div>
             )}
           </div>
