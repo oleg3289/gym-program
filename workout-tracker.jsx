@@ -22,15 +22,15 @@ const program = [
     color: "#E8553A",
     warmup: "Foam Roller грудний відділ 3 хв → Wall Slides 2×10",
     exercises: [
-      { name: "Pull Up", url: `${SITE}pull-up`, sets: "3", reps: "6-12", note: null },
-      { name: "Dumbbell Bench Press", url: `${SITE}dumbbell-bench-press.html`, sets: "4", reps: "10", note: null },
-      { name: "Chest Supported DB Row", url: `${SITE}chest-supported-dumbbell-row`, sets: "3", reps: "10", note: "🔄 Замість Landmine T-Bar Row — chest support прибирає навантаження з хребта" },
-      { name: "Single Arm Cable Lateral Raise", url: `${SITE}one-arm-cable-lateral-raise.html`, sets: "3", reps: "10", note: "🔄 Замість Landmine Press — ізоляція бічної дельти, безпечніше для плеча" },
-      { name: "Seated Cable Row", url: `${SITE}seated-row.html`, sets: "2", reps: "10", note: null },
-      { name: "Seated Dumbbell Press", url: `${SITE}seated-dumbbell-press.html`, sets: "2", reps: "10", note: "⚡ З опорою спини — зберігає жимовий паттерн без ризику для плеча" },
-      { name: "Barbell Curl", url: `${SITE}standing-barbell-curl.html`, sets: "2", reps: "10", note: null },
-      { name: "French Press", url: `${SITE}lying-tricep-extension.html`, sets: "2", reps: "10", note: null },
-      { name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "🔄 Замість Shrug — працює нижня трапеція і зовнішні ротатори" },
+      { name: "Pull Up", url: `${SITE}pull-up`, sets: "3", reps: "6-12", note: null, weight: null },
+      { name: "Dumbbell Bench Press", url: `${SITE}dumbbell-bench-press.html`, sets: "4", reps: "10", note: null, weight: [12, 16, 22, "кг/гант"] },
+      { name: "Chest Supported DB Row", url: `${SITE}chest-supported-dumbbell-row`, sets: "3", reps: "10", note: "🔄 Замість Landmine T-Bar Row — chest support прибирає навантаження з хребта", weight: [10, 14, 20, "кг/гант"] },
+      { name: "Single Arm Cable Lateral Raise", url: `${SITE}one-arm-cable-lateral-raise.html`, sets: "3", reps: "10", note: "🔄 Замість Landmine Press — ізоляція бічної дельти, безпечніше для плеча", weight: [4, 7, 10, "кг"] },
+      { name: "Seated Cable Row", url: `${SITE}seated-row.html`, sets: "2", reps: "10", note: null, weight: [25, 35, 50, "кг"] },
+      { name: "Seated Dumbbell Press", url: `${SITE}seated-dumbbell-press.html`, sets: "2", reps: "10", note: "⚡ З опорою спини — зберігає жимовий паттерн без ризику для плеча", weight: [8, 12, 16, "кг/гант"] },
+      { name: "Barbell Curl", url: `${SITE}standing-barbell-curl.html`, sets: "2", reps: "10", note: null, weight: [15, 20, 28, "кг"] },
+      { name: "French Press", url: `${SITE}lying-tricep-extension.html`, sets: "2", reps: "10", note: null, weight: [12, 18, 25, "кг"] },
+      { name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "🔄 Замість Shrug — працює нижня трапеція і зовнішні ротатори", weight: [10, 15, 22, "кг"] },
     ],
   },
   {
@@ -39,16 +39,16 @@ const program = [
     color: "#2D8F6F",
     warmup: "Glute Bridge 2×10 → Cat-Cow 1 хв",
     exercises: [
-      { name: "Leg Extension", url: `${SITE}leg-extension.html`, sets: "4", reps: "10", note: "🔄 Замість Goblet Squat — без осьового навантаження на хребет" },
-      { name: "Resistance Band Leg Curl", url: `${SITE}leg-curl.html`, sets: "2", reps: "10", note: "🔄 Замість Nordic Curl — лежачи з гумкою, без навантаження на поперек" },
-      { name: "Seated Leg Curl", url: `${SITE}seated-leg-curl`, sets: "3", reps: "10", note: "🔄 Замість Romanian Deadlift — ізоляція задньої поверхні без навантаження на спину" },
-      { name: "Leg Press", url: `${SITE}45-degree-leg-press.html`, sets: "3", reps: "12", note: null },
-      { name: "Barbell Hip Thrust", url: `${SITE}barbell-hip-thrust`, sets: "2", reps: "10", note: null },
-      { name: "Standing Calf Raise", url: `${SITE}standing-machine-calf-raise`, sets: "3", reps: "12", note: null },
-      { name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10", note: null },
-      { name: "Pallof Press", url: `${SITE}pallof-press`, sets: "3", reps: "10", note: "⚡ Антиротація — ключова для стабілізації хребта при сколіозі" },
-      { name: "Ab Crunch", url: `${SITE}ab-crunch`, sets: "3", reps: "10-15", note: null },
-      { name: "Hip Abduction Machine", url: `${SITE}hip-abduction-machine.html`, sets: "3", reps: "12", note: "⚡ Gluteus medius — ключовий м'яз для корекції APT" },
+      { name: "Leg Extension", url: `${SITE}leg-extension.html`, sets: "4", reps: "10", note: "🔄 Замість Goblet Squat — без осьового навантаження на хребет", weight: [20, 30, 45, "кг"] },
+      { name: "Resistance Band Leg Curl", url: `${SITE}leg-curl.html`, sets: "2", reps: "10", note: "🔄 Замість Nordic Curl — лежачи з гумкою, без навантаження на поперек", weight: null },
+      { name: "Seated Leg Curl", url: `${SITE}seated-leg-curl`, sets: "3", reps: "10", note: "🔄 Замість Romanian Deadlift — ізоляція задньої поверхні без навантаження на спину", weight: [20, 30, 45, "кг"] },
+      { name: "Leg Press", url: `${SITE}45-degree-leg-press.html`, sets: "3", reps: "12", note: null, weight: [25, 50, 80, "кг"] },
+      { name: "Barbell Hip Thrust", url: `${SITE}barbell-hip-thrust`, sets: "2", reps: "10", note: null, weight: [20, 40, 60, "кг"] },
+      { name: "Standing Calf Raise", url: `${SITE}standing-machine-calf-raise`, sets: "3", reps: "12", note: null, weight: [30, 50, 70, "кг"] },
+      { name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10", note: null, weight: [20, 30, 45, "кг"] },
+      { name: "Pallof Press", url: `${SITE}pallof-press`, sets: "3", reps: "10", note: "⚡ Антиротація — ключова для стабілізації хребта при сколіозі", weight: [8, 12, 18, "кг"] },
+      { name: "Ab Crunch", url: `${SITE}ab-crunch`, sets: "3", reps: "10-15", note: null, weight: null },
+      { name: "Hip Abduction Machine", url: `${SITE}hip-abduction-machine.html`, sets: "3", reps: "12", note: "⚡ Gluteus medius — ключовий м'яз для корекції APT", weight: [20, 30, 45, "кг"] },
     ],
     cooldown: [
       { name: "Kneeling Hip Flexor Stretch", url: "https://www.youtube.com/watch?v=Y7gvRhnV3iM&t=195", sets: "2", reps: "45-60s" },
@@ -62,15 +62,15 @@ const program = [
     color: "#3A6FD8",
     warmup: "Foam Roller грудний відділ 3 хв → Band Pull-Aparts 2×20",
     exercises: [
-      { name: "Lat Pulldown", url: `${SITE}lat-pull-down.html`, sets: "3", reps: "10", note: null },
-      { name: "Incline Dumbbell Bench Press", url: `${SITE}incline-dumbbell-bench-press.html`, sets: "3", reps: "10", note: null },
-      { name: "One Arm Dumbbell Row", url: `${SITE}one-arm-dumbbell-row.html`, sets: "3", reps: "10", note: "Унілатеральна тяга — вирівнює дисбаланс лівого/правого боку" },
-      { name: "Seated Dumbbell Press", url: `${SITE}seated-dumbbell-press.html`, sets: "3", reps: "10", note: "🔄 З опорою спини — безпечніше для хребта при сколіозі" },
-      { name: "Machine Fly", url: `${SITE}pec-dec.html`, sets: "2", reps: "12", note: null },
-      { name: "Cable Rope Curl", url: `${SITE}rope-cable-curl.html`, sets: "2", reps: "10", note: null },
-      { name: "Cable Tricep Pushdown", url: `${SITE}rope-tricep-extension.html`, sets: "2", reps: "10", note: null },
-      { name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "⚡ Обов'язково кожен upper day — ключова вправа для твоєї лопатки" },
-      { name: "Reverse Dumbbell Curl", url: `${SITE}standing-dumbbell-reverse-curl.html`, sets: "2", reps: "10", note: null },
+      { name: "Lat Pulldown", url: `${SITE}lat-pull-down.html`, sets: "3", reps: "10", note: null, weight: [30, 40, 55, "кг"] },
+      { name: "Incline Dumbbell Bench Press", url: `${SITE}incline-dumbbell-bench-press.html`, sets: "3", reps: "10", note: null, weight: [10, 14, 20, "кг/гант"] },
+      { name: "One Arm Dumbbell Row", url: `${SITE}one-arm-dumbbell-row.html`, sets: "3", reps: "10", note: "Унілатеральна тяга — вирівнює дисбаланс лівого/правого боку", weight: [12, 16, 22, "кг"] },
+      { name: "Seated Dumbbell Press", url: `${SITE}seated-dumbbell-press.html`, sets: "3", reps: "10", note: "🔄 З опорою спини — безпечніше для хребта при сколіозі", weight: [8, 12, 16, "кг/гант"] },
+      { name: "Machine Fly", url: `${SITE}pec-dec.html`, sets: "2", reps: "12", note: null, weight: [20, 30, 45, "кг"] },
+      { name: "Cable Rope Curl", url: `${SITE}rope-cable-curl.html`, sets: "2", reps: "10", note: null, weight: [10, 15, 22, "кг"] },
+      { name: "Cable Tricep Pushdown", url: `${SITE}rope-tricep-extension.html`, sets: "2", reps: "10", note: null, weight: [15, 22, 32, "кг"] },
+      { name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "⚡ Обов'язково кожен upper day — ключова вправа для твоєї лопатки", weight: [10, 15, 22, "кг"] },
+      { name: "Reverse Dumbbell Curl", url: `${SITE}standing-dumbbell-reverse-curl.html`, sets: "2", reps: "10", note: null, weight: [6, 10, 14, "кг/гант"] },
     ],
   },
   {
@@ -79,17 +79,17 @@ const program = [
     color: "#8B5CF6",
     warmup: "Glute Bridge 2×10 → Cat-Cow 1 хв",
     exercises: [
-      { name: "Hack Squat", url: `${SITE}hack-squat.html`, sets: "4", reps: "10", note: "🔄 Замість Trap Bar Deadlift — підтримка спини, без осьового навантаження" },
-      { name: "Smith Machine Squat", url: `${SITE}smith-machine-squat.html`, sets: "3", reps: "10", note: "🔄 Замість Front Squat — фіксована траєкторія, безпечніше для поперека" },
-      { name: "Seated Leg Curl", url: `${SITE}seated-leg-curl`, sets: "3", reps: "10", note: null },
-      { name: "Leg Extension", url: `${SITE}leg-extension.html`, sets: "3", reps: "10", note: null },
-      { name: "Cable Kickback", url: `${SITE}glute-kick-back.html`, sets: "2", reps: "12", note: "🔄 Замість Hyperextension — ізоляція сідниць без навантаження на поперек" },
-      { name: "Bulgarian Split Squat", url: `${SITE}one-leg-dumbbell-squat-aka-bulgarian-squat.html`, sets: "2", reps: "10", note: null },
-      { name: "Leg Press Calf Raise", url: `${SITE}45-degress-calf-press.html`, sets: "2", reps: "15", note: null },
-      { name: "Plank", url: `${SITE}hover.html`, sets: "3", reps: "30s", note: null },
-      { name: "Pallof Press", url: `${SITE}pallof-press`, sets: "3", reps: "10", note: "⚡ Антиротація — стабілізація хребта при сколіозі" },
-      { name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10", note: null },
-      { name: "Hip Abduction Machine", url: `${SITE}hip-abduction-machine.html`, sets: "3", reps: "12", note: "⚡ Gluteus medius — ключовий м'яз для корекції APT" },
+      { name: "Hack Squat", url: `${SITE}hack-squat.html`, sets: "4", reps: "10", note: "🔄 Замість Trap Bar Deadlift — підтримка спини, без осьового навантаження", weight: [20, 40, 60, "кг"] },
+      { name: "Smith Machine Squat", url: `${SITE}smith-machine-squat.html`, sets: "3", reps: "10", note: "🔄 Замість Front Squat — фіксована траєкторія, безпечніше для поперека", weight: [20, 30, 50, "кг"] },
+      { name: "Seated Leg Curl", url: `${SITE}seated-leg-curl`, sets: "3", reps: "10", note: null, weight: [20, 30, 45, "кг"] },
+      { name: "Leg Extension", url: `${SITE}leg-extension.html`, sets: "3", reps: "10", note: null, weight: [20, 30, 45, "кг"] },
+      { name: "Cable Kickback", url: `${SITE}glute-kick-back.html`, sets: "2", reps: "12", note: "🔄 Замість Hyperextension — ізоляція сідниць без навантаження на поперек", weight: [8, 12, 18, "кг"] },
+      { name: "Bulgarian Split Squat", url: `${SITE}one-leg-dumbbell-squat-aka-bulgarian-squat.html`, sets: "2", reps: "10", note: null, weight: [8, 12, 18, "кг/гант"] },
+      { name: "Leg Press Calf Raise", url: `${SITE}45-degress-calf-press.html`, sets: "2", reps: "15", note: null, weight: [30, 50, 80, "кг"] },
+      { name: "Plank", url: `${SITE}hover.html`, sets: "3", reps: "30s", note: null, weight: null },
+      { name: "Pallof Press", url: `${SITE}pallof-press`, sets: "3", reps: "10", note: "⚡ Антиротація — стабілізація хребта при сколіозі", weight: [8, 12, 18, "кг"] },
+      { name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10", note: null, weight: [20, 30, 45, "кг"] },
+      { name: "Hip Abduction Machine", url: `${SITE}hip-abduction-machine.html`, sets: "3", reps: "12", note: "⚡ Gluteus medius — ключовий м'яз для корекції APT", weight: [20, 30, 45, "кг"] },
     ],
     cooldown: [
       { name: "Kneeling Hip Flexor Stretch", url: "https://www.youtube.com/watch?v=Y7gvRhnV3iM&t=195", sets: "2", reps: "45-60s" },
@@ -166,10 +166,11 @@ export default function WorkoutTracker() {
   const [expanded, setExpanded] = useState({ 0: true, 1: false, 2: false, 3: false });
   const [week, setWeek] = useState(saved?.week ?? 1);
   const [extraSets, setExtraSets] = useState(saved?.extraSets ?? {});
+  const [userWeights, setUserWeights] = useState(saved?.userWeights ?? {});
 
   useEffect(() => {
-    saveState({ checked, week, extraSets });
-  }, [checked, week, extraSets]);
+    saveState({ checked, week, extraSets, userWeights });
+  }, [checked, week, extraSets, userWeights]);
 
   const toggleSet = (dayIdx, exIdx, setIdx) => {
     const key = `${dayIdx}-${exIdx}-${setIdx}`;
@@ -542,6 +543,47 @@ export default function WorkoutTracker() {
           color: #7db8f7;
           border-bottom-color: #7db8f7;
         }
+        .wt-weight-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-top: 4px;
+          font-size: 11px;
+        }
+        .wt-weight-hint {
+          color: var(--text-secondary, #8a8780);
+          white-space: nowrap;
+        }
+        .wt-w-start { color: #2D8F6F; font-weight: 600; }
+        .wt-w-mid { color: #d4a54a; font-weight: 600; }
+        .wt-w-max { color: #E8553A; font-weight: 600; }
+        .wt-w-sep { color: rgba(255,255,255,0.15); }
+        .wt-w-unit { color: var(--text-secondary, #8a8780); font-size: 10px; }
+        .wt-weight-input-wrap {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+          margin-left: auto;
+        }
+        .wt-weight-input {
+          width: 40px;
+          padding: 2px 4px;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 4px;
+          color: var(--text, #e2e0dc);
+          font-family: inherit;
+          font-size: 11px;
+          text-align: center;
+          outline: none;
+          transition: border-color 0.2s;
+        }
+        .wt-weight-input:focus {
+          border-color: #3A6FD8;
+        }
+        .wt-weight-input::placeholder {
+          color: rgba(255,255,255,0.15);
+        }
         .wt-note {
           font-size: 11px;
           color: #d4a54a;
@@ -649,6 +691,29 @@ export default function WorkoutTracker() {
                           <a href={ex.url} target="_blank" rel="noopener noreferrer">{ex.name}</a>
                           <span className="wt-reps-label">× {ex.reps}</span>
                         </div>
+                        {ex.weight && (
+                          <div className="wt-weight-row">
+                            <div className="wt-weight-hint">
+                              <span className="wt-w-start">{ex.weight[0]}</span>
+                              <span className="wt-w-sep"> · </span>
+                              <span className="wt-w-mid">{ex.weight[1]}</span>
+                              <span className="wt-w-sep"> · </span>
+                              <span className="wt-w-max">{ex.weight[2]}</span>
+                              <span className="wt-w-unit"> {ex.weight[3]}</span>
+                            </div>
+                            <div className="wt-weight-input-wrap">
+                              <input
+                                className="wt-weight-input"
+                                type="text"
+                                inputMode="decimal"
+                                placeholder="—"
+                                value={userWeights[ex.name] || ""}
+                                onChange={(e) => setUserWeights((prev) => ({ ...prev, [ex.name]: e.target.value }))}
+                              />
+                              <span className="wt-w-unit">{ex.weight[3]}</span>
+                            </div>
+                          </div>
+                        )}
                         <div className="wt-sets-row">
                           {Array.from({ length: sets }, (_, setIdx) => {
                             const isSetDone = !!checked[`${dayIdx}-${exIdx}-${setIdx}`];
