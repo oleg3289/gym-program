@@ -167,10 +167,25 @@ export default function WorkoutTracker() {
   const [week, setWeek] = useState(saved?.week ?? 1);
   const [extraSets, setExtraSets] = useState(saved?.extraSets ?? {});
   const [userWeights, setUserWeights] = useState(saved?.userWeights ?? {});
+  const [plankTime, setPlankTime] = useState(30);
+  const [plankRunning, setPlankRunning] = useState(false);
 
   useEffect(() => {
     saveState({ checked, week, extraSets, userWeights });
   }, [checked, week, extraSets, userWeights]);
+
+  useEffect(() => {
+    if (!plankRunning) return;
+    if (plankTime <= 0) { setPlankRunning(false); return; }
+    const id = setInterval(() => setPlankTime((t) => t - 1), 1000);
+    return () => clearInterval(id);
+  }, [plankRunning, plankTime]);
+
+  const togglePlank = () => {
+    if (plankTime <= 0) { setPlankTime(30); setPlankRunning(true); }
+    else setPlankRunning((r) => !r);
+  };
+  const resetPlank = () => { setPlankRunning(false); setPlankTime(30); };
 
   const toggleSet = (dayIdx, exIdx, setIdx) => {
     const key = `${dayIdx}-${exIdx}-${setIdx}`;
@@ -594,6 +609,62 @@ export default function WorkoutTracker() {
           border-radius: 4px;
         }
 
+        .wt-plank-timer {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-top: 8px;
+          padding: 7px 10px;
+          background: rgba(139, 92, 246, 0.08);
+          border: 1px solid rgba(139, 92, 246, 0.2);
+          border-radius: 7px;
+        }
+        .wt-plank-time {
+          font-size: 20px;
+          font-weight: 700;
+          letter-spacing: 1px;
+          color: #c4b5fd;
+          min-width: 42px;
+        }
+        .wt-plank-time.done { color: #2D8F6F; }
+        .wt-plank-btn {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          padding: 5px 12px;
+          border-radius: 5px;
+          border: 1px solid rgba(139, 92, 246, 0.4);
+          background: rgba(139, 92, 246, 0.15);
+          color: #c4b5fd;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .wt-plank-btn:hover {
+          background: rgba(139, 92, 246, 0.3);
+          border-color: rgba(139, 92, 246, 0.7);
+        }
+        .wt-plank-btn.running {
+          background: rgba(232, 85, 58, 0.12);
+          border-color: rgba(232, 85, 58, 0.4);
+          color: #fca99a;
+        }
+        .wt-plank-btn.running:hover {
+          background: rgba(232, 85, 58, 0.25);
+        }
+        .wt-plank-reset {
+          font-size: 14px;
+          background: none;
+          border: none;
+          color: rgba(255,255,255,0.2);
+          cursor: pointer;
+          padding: 2px 4px;
+          transition: color 0.2s;
+          line-height: 1;
+        }
+        .wt-plank-reset:hover { color: rgba(255,255,255,0.5); }
+
         .wt-cooldown-header {
           margin: 12px 16px 4px;
           padding: 8px 14px;
@@ -732,6 +803,19 @@ export default function WorkoutTracker() {
                           <span className="wt-sets-label">{doneSets}/{sets}</span>
                         </div>
                         {ex.note && <div className="wt-note">{linkify(ex.note)}</div>}
+                        {ex.name === "Plank" && (
+                          <div className="wt-plank-timer">
+                            <span className={`wt-plank-time ${plankTime <= 0 ? "done" : ""}`}>
+                              {plankTime <= 0 ? "✓" : `${plankTime}s`}
+                            </span>
+                            <button className={`wt-plank-btn ${plankRunning ? "running" : ""}`} onClick={togglePlank}>
+                              {plankRunning ? "Stop" : plankTime <= 0 ? "Again" : "Start"}
+                            </button>
+                            {(plankTime < 30 || plankRunning) && (
+                              <button className="wt-plank-reset" onClick={resetPlank} title="Reset">↺</button>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   );
