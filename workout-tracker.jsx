@@ -31,6 +31,8 @@ const program = [
       { name: "Barbell Curl", url: `${SITE}standing-barbell-curl.html`, sets: "2", reps: "10", note: null, weight: [15, 20, 28, "кг"] },
       { name: "French Press", url: `${SITE}lying-tricep-extension.html`, sets: "2", reps: "10", note: null, weight: [12, 18, 25, "кг"] },
       { name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "🔄 Замість Shrug — працює нижня трапеція і зовнішні ротатори", weight: [10, 15, 22, "кг"] },
+      { name: "Pallof Press", url: `${SITE}pallof-press`, sets: "3", reps: "10", note: "⚡ Антиротація — стабілізація хребта при сколіозі", weight: [8, 12, 18, "кг"] },
+      { name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10", note: null, weight: [20, 30, 45, "кг"] },
     ],
   },
   {
@@ -45,8 +47,6 @@ const program = [
       { name: "Leg Press", url: `${SITE}45-degree-leg-press.html`, sets: "3", reps: "12", note: null, weight: [25, 50, 80, "кг"] },
       { name: "Barbell Hip Thrust", url: `${SITE}barbell-hip-thrust`, sets: "2", reps: "10", note: null, weight: [20, 40, 60, "кг"] },
       { name: "Standing Calf Raise", url: `${SITE}standing-machine-calf-raise`, sets: "3", reps: "12", note: null, weight: [30, 50, 70, "кг"] },
-      { name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10", note: null, weight: [20, 30, 45, "кг"] },
-      { name: "Pallof Press", url: `${SITE}pallof-press`, sets: "3", reps: "10", note: "⚡ Антиротація — ключова для стабілізації хребта при сколіозі", weight: [8, 12, 18, "кг"] },
       { name: "Ab Crunch", url: `${SITE}ab-crunch`, sets: "3", reps: "10-15", note: null, weight: null },
       { name: "Hip Abduction Machine", url: `${SITE}hip-abduction-machine.html`, sets: "3", reps: "12", note: "⚡ Gluteus medius — ключовий м'яз для корекції APT", weight: [20, 30, 45, "кг"] },
     ],
@@ -71,6 +71,8 @@ const program = [
       { name: "Cable Tricep Pushdown", url: `${SITE}rope-tricep-extension.html`, sets: "2", reps: "10", note: null, weight: [15, 22, 32, "кг"] },
       { name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "⚡ Обов'язково кожен upper day — ключова вправа для твоєї лопатки", weight: [10, 15, 22, "кг"] },
       { name: "Reverse Dumbbell Curl", url: `${SITE}standing-dumbbell-reverse-curl.html`, sets: "2", reps: "10", note: null, weight: [6, 10, 14, "кг/гант"] },
+      { name: "Pallof Press", url: `${SITE}pallof-press`, sets: "3", reps: "10", note: "⚡ Антиротація — стабілізація хребта при сколіозі", weight: [8, 12, 18, "кг"] },
+      { name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10", note: null, weight: [20, 30, 45, "кг"] },
     ],
   },
   {
@@ -87,8 +89,6 @@ const program = [
       { name: "Bulgarian Split Squat", url: `${SITE}one-leg-dumbbell-squat-aka-bulgarian-squat.html`, sets: "2", reps: "10", note: null, weight: [8, 12, 18, "кг/гант"] },
       { name: "Leg Press Calf Raise", url: `${SITE}45-degress-calf-press.html`, sets: "2", reps: "15", note: null, weight: [30, 50, 80, "кг"] },
       { name: "Plank", url: `${SITE}hover.html`, sets: "3", reps: "30s", note: null, weight: null },
-      { name: "Pallof Press", url: `${SITE}pallof-press`, sets: "3", reps: "10", note: "⚡ Антиротація — стабілізація хребта при сколіозі", weight: [8, 12, 18, "кг"] },
-      { name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10", note: null, weight: [20, 30, 45, "кг"] },
       { name: "Hip Abduction Machine", url: `${SITE}hip-abduction-machine.html`, sets: "3", reps: "12", note: "⚡ Gluteus medius — ключовий м'яз для корекції APT", weight: [20, 30, 45, "кг"] },
     ],
     cooldown: [
