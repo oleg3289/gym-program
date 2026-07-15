@@ -14,6 +14,22 @@ function saveState(state) {
 }
 
 const SITE = "https://www.muscleandstrength.com/exercises/";
+const TG = "https://www.technogym.com/en-INT/product/";
+
+const PA12_URL = `${TG}chin-up-dip-leg-raise_PA12.html`;
+const VERTICAL_TRACTION_URL = `${TG}selection-700-vertical-traction_MNGC.html`;
+const LOW_ROW_URL = `${TG}selection-700-low-row_MNHC.html`;
+
+// Вправи згруповані по зонах залу, щоб не бігати між станціями.
+// Порядок зон усередині дня все одно підпорядкований правилу
+// "компаунди свіжим, ізоляція в кінці".
+const ZONES = {
+  pa12: "PA12 — Chin Up / Leg Raise",
+  free: "Лава + гантелі",
+  machine: "Тренажери",
+  cable: "Блок",
+  floor: "Підлога",
+};
 
 const program = [
   {
@@ -22,18 +38,18 @@ const program = [
     color: "#E8553A",
     warmup: "Foam Roller грудний відділ 3 хв → Wall Slides 2×10",
     exercises: [
-      { name: "Pull Up", url: `${SITE}pull-up`, sets: "3", reps: "6-12", note: null, weight: null },
-      { name: "Dumbbell Bench Press", url: `${SITE}dumbbell-bench-press.html`, sets: "4", reps: "10", note: null, weight: [12, 16, 22, "кг/гант"] },
-      { name: "Chest Press Machine", url: `${SITE}hammer-strength-bench-press.html`, sets: "3", reps: "10", note: "🆕 Додатковий жим — можна йти до відмови без спотера", weight: [25, 40, 55, "кг"] },
-      { name: "Chest Supported DB Row", url: `${SITE}chest-supported-dumbbell-row`, sets: "3", reps: "10", note: "🔄 Замість Landmine T-Bar Row — chest support прибирає навантаження з хребта", weight: [10, 14, 20, "кг/гант"] },
-      { name: "Single Arm Cable Lateral Raise", url: `${SITE}one-arm-cable-lateral-raise.html`, sets: "3", reps: "10", note: "🔄 Замість Landmine Press — ізоляція бічної дельти, безпечніше для плеча", weight: [4, 7, 10, "кг"] },
-      { name: "Seated Cable Row", url: `${SITE}seated-row.html`, sets: "2", reps: "10", note: null, weight: [25, 35, 50, "кг"] },
-      { name: "Seated Dumbbell Press", url: `${SITE}seated-dumbbell-press.html`, sets: "2", reps: "10", note: "⚡ З опорою спини — зберігає жимовий паттерн без ризику для плеча", weight: [8, 12, 16, "кг/гант"] },
-      { name: "Preacher Curl", url: `${SITE}preacher-curl.html`, sets: "2", reps: "10", note: "🔄 Замість Barbell Curl — лікті зафіксовані, чиста ізоляція біцепса, симетрія для сколіозу", weight: [12, 18, 25, "кг"] },
-      { name: "French Press", url: `${SITE}lying-tricep-extension.html`, sets: "2", reps: "10", note: null, weight: [12, 18, 25, "кг"] },
-      { name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "🔄 Замість Shrug — працює нижня трапеція і зовнішні ротатори", weight: [10, 15, 22, "кг"] },
-      { name: "Pallof Press", url: `${SITE}pallof-press`, sets: "3", reps: "10", note: "⚡ Антиротація — стабілізація хребта при сколіозі", weight: [8, 12, 18, "кг"] },
-      { name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10", note: null, weight: [20, 30, 45, "кг"] },
+      { zone: "pa12", name: "Pull Up", url: `${SITE}pull-up`, sets: "3", reps: "6-12", note: "Станція Chin Up на PA12 — міняй хват між тижнями: широкий / нейтральний / вузький", weight: null },
+      { zone: "free", name: "Dumbbell Bench Press", url: `${SITE}dumbbell-bench-press.html`, sets: "4", reps: "8-12", note: null, weight: { start: 12, mid: 16, max: 22, unit: "кг/гант", step: 2 } },
+      { zone: "free", name: "Chest Supported DB Row", url: `${SITE}chest-supported-dumbbell-row`, sets: "3", reps: "8-12", note: "🔄 Замість Landmine T-Bar Row — chest support прибирає навантаження з хребта", weight: { start: 10, mid: 14, max: 20, unit: "кг/гант", step: 2 } },
+      { zone: "free", name: "Seated Dumbbell Press", url: `${SITE}seated-dumbbell-press.html`, sets: "2", reps: "8-12", note: "⚡ З опорою спини — зберігає жимовий паттерн без ризику для плеча", weight: { start: 8, mid: 12, max: 16, unit: "кг/гант", step: 2 } },
+      { zone: "machine", name: "Chest Press Machine", url: `${SITE}hammer-strength-bench-press.html`, sets: "3", reps: "8-12", note: "Додатковий жим — можна йти до відмови без спотера", weight: { start: 25, mid: 40, max: 55, unit: "кг", step: 5 } },
+      { zone: "machine", name: "Low Row", url: LOW_ROW_URL, sets: "2", reps: "8-12", note: "🆕 Замість Seated Cable Row — грудна опора знімає навантаження з хребта, незалежні важелі вирівнюють лівий/правий бік", weight: { start: 25, mid: 35, max: 50, unit: "кг", step: 2.5 } },
+      { zone: "free", name: "Preacher Curl", url: `${SITE}preacher-curl.html`, sets: "2", reps: "8-12", note: "🔄 Замість Barbell Curl — лікті зафіксовані, чиста ізоляція біцепса, симетрія для сколіозу", weight: { start: 12, mid: 18, max: 25, unit: "кг", step: 2.5 } },
+      { zone: "free", name: "French Press", url: `${SITE}lying-tricep-extension.html`, sets: "2", reps: "8-12", note: null, weight: { start: 12, mid: 18, max: 25, unit: "кг", step: 2.5 } },
+      { zone: "cable", name: "Single Arm Cable Lateral Raise", url: `${SITE}one-arm-cable-lateral-raise.html`, sets: "3", reps: "8-12", note: "🔄 Замість Landmine Press — ізоляція бічної дельти, безпечніше для плеча", weight: { start: 4, mid: 7, max: 10, unit: "кг", step: 1 } },
+      { zone: "cable", name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "🔄 Замість Shrug — працює нижня трапеція і зовнішні ротатори", weight: { start: 10, mid: 15, max: 22, unit: "кг", step: 2.5 } },
+      { zone: "cable", name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10-15", note: null, weight: { start: 20, mid: 30, max: 45, unit: "кг", step: 2.5 } },
+      { zone: "pa12", name: "Roman Chair Twisting Knee Raise", url: `${SITE}chair-twisting-knee-raise.html`, sets: "3", reps: "10-15", note: "🔄 Замість Pallof Press — станція Leg Raise на PA12. Спина на подушці, коліна вгору і вбік по черзі. Хребет висить і розтягується, а не стискається — тому це безпечно там, де звичайний Oblique Crunch ні.", weight: null },
     ],
   },
   {
@@ -42,15 +58,15 @@ const program = [
     color: "#2D8F6F",
     warmup: "Glute Bridge 2×10 → Cat-Cow 1 хв",
     exercises: [
-      { name: "Leg Extension", url: `${SITE}leg-extension.html`, sets: "3", reps: "10", note: "🔄 Замість Goblet Squat — без осьового навантаження на хребет", weight: [20, 30, 45, "кг"] },
-      { name: "Resistance Band Leg Curl", url: `${SITE}leg-curl.html`, sets: "2", reps: "10", note: "🔄 Замість Nordic Curl — лежачи з гумкою, без навантаження на поперек", weight: null },
-      { name: "Seated Leg Curl", url: `${SITE}seated-leg-curl`, sets: "3", reps: "10", note: "🔄 Замість Romanian Deadlift — ізоляція задньої поверхні без навантаження на спину", weight: [20, 30, 45, "кг"] },
-      { name: "Leg Press", url: `${SITE}45-degree-leg-press.html`, sets: "3", reps: "12", note: null, weight: [25, 50, 80, "кг"] },
-      { name: "Hip Thrust Machine", url: `${SITE}barbell-hip-thrust`, sets: "2", reps: "10", note: "🔄 Замість Barbell Hip Thrust — без штанги через таз, фіксована траєкторія, безпечніше", weight: [25, 50, 80, "кг"] },
-      { name: "Standing Calf Raise", url: `${SITE}standing-machine-calf-raise`, sets: "3", reps: "12", note: null, weight: [30, 50, 70, "кг"] },
-      { name: "Machine Ab Crunch", url: `${SITE}weighted-crunch.html`, sets: "3", reps: "10-15", note: "🔄 Замість bodyweight Ab Crunch — селекторна машина, прогресивна вага", weight: [15, 25, 40, "кг"] },
-      { name: "Hip Abduction Machine", url: `${SITE}hip-abduction-machine.html`, sets: "3", reps: "12", note: "⚡ Gluteus medius — ключовий м'яз для корекції APT", weight: [20, 30, 45, "кг"] },
-      { name: "Hip Adductor Machine", url: `${SITE}hip-adduction-machine.html`, sets: "3", reps: "12", note: "⚡ Пара до Hip Abduction — баланс зовнішня/внутрішня сторона стегна", weight: [20, 30, 45, "кг"] },
+      { zone: "machine", name: "Leg Press", url: `${SITE}45-degree-leg-press.html`, sets: "3", reps: "10-15", note: null, weight: { start: 25, mid: 50, max: 80, unit: "кг", step: 5 } },
+      { zone: "machine", name: "Hip Thrust Machine", url: `${SITE}barbell-hip-thrust`, sets: "2", reps: "8-12", note: "🔄 Замість Barbell Hip Thrust — без штанги через таз, фіксована траєкторія, безпечніше", weight: { start: 25, mid: 50, max: 80, unit: "кг", step: 5 } },
+      { zone: "machine", name: "Leg Extension", url: `${SITE}leg-extension.html`, sets: "3", reps: "8-12", note: "🔄 Замість Goblet Squat — без осьового навантаження на хребет", weight: { start: 20, mid: 30, max: 45, unit: "кг", step: 2.5 } },
+      { zone: "machine", name: "Seated Leg Curl", url: `${SITE}seated-leg-curl`, sets: "3", reps: "8-12", note: "🔄 Замість Romanian Deadlift — ізоляція задньої поверхні без навантаження на спину", weight: { start: 20, mid: 30, max: 45, unit: "кг", step: 2.5 } },
+      { zone: "machine", name: "Lying Leg Curl", url: `${SITE}leg-curl.html`, sets: "2", reps: "8-12", note: "🆕 Замість Resistance Band Leg Curl — той самий м'яз, але стегно випрямлене, тому кут інший. ⚠️ Таз притиснутий до подушки — якщо відриваєш, вантажиться поперек.", weight: { start: 15, mid: 25, max: 35, unit: "кг", step: 2.5 } },
+      { zone: "machine", name: "Hip Abduction Machine", url: `${SITE}hip-abduction-machine.html`, sets: "3", reps: "10-15", note: "⚡ Gluteus medius — ключовий м'яз для корекції APT", weight: { start: 20, mid: 30, max: 45, unit: "кг", step: 2.5 } },
+      { zone: "machine", name: "Hip Adductor Machine", url: `${SITE}hip-adduction-machine.html`, sets: "3", reps: "10-15", note: "⚡ Пара до Hip Abduction — баланс зовнішня/внутрішня сторона стегна", weight: { start: 20, mid: 30, max: 45, unit: "кг", step: 2.5 } },
+      { zone: "machine", name: "Standing Calf Raise", url: `${SITE}standing-machine-calf-raise`, sets: "3", reps: "10-15", note: null, weight: { start: 30, mid: 50, max: 70, unit: "кг", step: 5 } },
+      { zone: "machine", name: "Machine Ab Crunch", url: `${SITE}weighted-crunch.html`, sets: "3", reps: "10-15", note: "🔄 Замість bodyweight Ab Crunch — селекторна машина, прогресивна вага", weight: { start: 15, mid: 25, max: 40, unit: "кг", step: 2.5 } },
     ],
     cooldown: [
       { name: "Kneeling Hip Flexor Stretch", url: "https://www.youtube.com/watch?v=Y7gvRhnV3iM&t=195", sets: "2", reps: "45-60s" },
@@ -64,18 +80,18 @@ const program = [
     color: "#3A6FD8",
     warmup: "Foam Roller грудний відділ 3 хв → Band Pull-Aparts 2×20",
     exercises: [
-      { name: "Lat Pulldown", url: `${SITE}lat-pull-down.html`, sets: "3", reps: "10", note: null, weight: [30, 40, 55, "кг"] },
-      { name: "Incline Dumbbell Bench Press", url: `${SITE}incline-dumbbell-bench-press.html`, sets: "3", reps: "10", note: null, weight: [10, 14, 20, "кг/гант"] },
-      { name: "One Arm Dumbbell Row", url: `${SITE}one-arm-dumbbell-row.html`, sets: "3", reps: "10", note: "Унілатеральна тяга — вирівнює дисбаланс лівого/правого боку", weight: [12, 16, 22, "кг"] },
-      { name: "Seated Dumbbell Press", url: `${SITE}seated-dumbbell-press.html`, sets: "3", reps: "10", note: "🔄 З опорою спини — безпечніше для хребта при сколіозі", weight: [8, 12, 16, "кг/гант"] },
-      { name: "Cable Crossover", url: `${SITE}cable-crossovers.html`, sets: "3", reps: "12", note: "🔄 Замість Machine Fly — кращий ROM, можна міняти кути (high-to-low / mid)", weight: [10, 15, 22, "кг"] },
-      { name: "Cable Rope Curl", url: `${SITE}rope-cable-curl.html`, sets: "2", reps: "10", note: null, weight: [10, 15, 22, "кг"] },
-      { name: "Hammer Curl", url: `${SITE}standing-hammer-curl.html`, sets: "3", reps: "10", note: "🆕 Нейтральний хват — біцепс + brachialis (товщина руки)", weight: [8, 12, 16, "кг/гант"] },
-      { name: "Cable Tricep Pushdown", url: `${SITE}rope-tricep-extension.html`, sets: "2", reps: "10", note: null, weight: [15, 22, 32, "кг"] },
-      { name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "⚡ Обов'язково кожен upper day — ключова вправа для твоєї лопатки", weight: [10, 15, 22, "кг"] },
-      { name: "Reverse Pec Deck", url: `${SITE}machine-reverse-fly`, sets: "3", reps: "12-15", note: "🔄 Замість Reverse DB Curl — прямі задні дельти, критично для постави при сколіозі", weight: [15, 25, 40, "кг"] },
-      { name: "Pallof Press", url: `${SITE}pallof-press`, sets: "3", reps: "10", note: "⚡ Антиротація — стабілізація хребта при сколіозі", weight: [8, 12, 18, "кг"] },
-      { name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10", note: null, weight: [20, 30, 45, "кг"] },
+      { zone: "machine", name: "Vertical Traction", url: VERTICAL_TRACTION_URL, sets: "3", reps: "8-12", note: "🆕 Замість Lat Pulldown — сидиш зі спинкою і грудною подушкою, хребет не тримає вагу. Незалежні важелі вирівнюють лівий/правий бік.", weight: { start: 30, mid: 40, max: 55, unit: "кг", step: 2.5 } },
+      { zone: "free", name: "Incline Dumbbell Bench Press", url: `${SITE}incline-dumbbell-bench-press.html`, sets: "3", reps: "8-12", note: null, weight: { start: 10, mid: 14, max: 20, unit: "кг/гант", step: 2 } },
+      { zone: "free", name: "One Arm Dumbbell Row", url: `${SITE}one-arm-dumbbell-row.html`, sets: "3", reps: "8-12", note: "Унілатеральна тяга — вирівнює дисбаланс лівого/правого боку", weight: { start: 12, mid: 16, max: 22, unit: "кг", step: 2 } },
+      { zone: "free", name: "Seated Dumbbell Press", url: `${SITE}seated-dumbbell-press.html`, sets: "3", reps: "8-12", note: "🔄 З опорою спини — безпечніше для хребта при сколіозі", weight: { start: 8, mid: 12, max: 16, unit: "кг/гант", step: 2 } },
+      { zone: "free", name: "Hammer Curl", url: `${SITE}standing-hammer-curl.html`, sets: "3", reps: "8-12", note: "Нейтральний хват — біцепс + brachialis (товщина руки)", weight: { start: 8, mid: 12, max: 16, unit: "кг/гант", step: 2 } },
+      { zone: "cable", name: "Cable Crossover", url: `${SITE}cable-crossovers.html`, sets: "3", reps: "10-15", note: "🔄 Замість Machine Fly — кращий ROM, можна міняти кути (high-to-low / mid)", weight: { start: 10, mid: 15, max: 22, unit: "кг", step: 2.5 } },
+      { zone: "cable", name: "Cable Rope Curl", url: `${SITE}rope-cable-curl.html`, sets: "2", reps: "8-12", note: null, weight: { start: 10, mid: 15, max: 22, unit: "кг", step: 2.5 } },
+      { zone: "cable", name: "Cable Tricep Pushdown", url: `${SITE}rope-tricep-extension.html`, sets: "2", reps: "8-12", note: null, weight: { start: 15, mid: 22, max: 32, unit: "кг", step: 2.5 } },
+      { zone: "cable", name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "⚡ Обов'язково кожен upper day — ключова вправа для твоєї лопатки", weight: { start: 10, mid: 15, max: 22, unit: "кг", step: 2.5 } },
+      { zone: "cable", name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10-15", note: null, weight: { start: 20, mid: 30, max: 45, unit: "кг", step: 2.5 } },
+      { zone: "machine", name: "Reverse Pec Deck", url: `${SITE}machine-reverse-fly`, sets: "3", reps: "12-15", note: "🔄 Замість Reverse DB Curl — прямі задні дельти, критично для постави при сколіозі", weight: { start: 15, mid: 25, max: 40, unit: "кг", step: 2.5 } },
+      { zone: "pa12", name: "Roman Chair Twisting Knee Raise", url: `${SITE}chair-twisting-knee-raise.html`, sets: "3", reps: "10-15", note: "🔄 Замість Pallof Press — станція Leg Raise на PA12. Спина на подушці, коліна вгору і вбік по черзі.", weight: null },
     ],
   },
   {
@@ -84,14 +100,14 @@ const program = [
     color: "#8B5CF6",
     warmup: "Glute Bridge 2×10 → Cat-Cow 1 хв",
     exercises: [
-      { name: "Hack Squat", url: `${SITE}hack-squat.html`, sets: "3", reps: "10", note: "🔄 Замість Trap Bar Deadlift — підтримка спини, без осьового навантаження", weight: [20, 40, 60, "кг"] },
-      { name: "Seated Leg Curl", url: `${SITE}seated-leg-curl`, sets: "3", reps: "10", note: null, weight: [20, 30, 45, "кг"] },
-      { name: "Leg Extension", url: `${SITE}leg-extension.html`, sets: "2", reps: "10", note: null, weight: [20, 30, 45, "кг"] },
-      { name: "Cable Kickback", url: `${SITE}glute-kick-back.html`, sets: "2", reps: "12", note: "🔄 Замість Hyperextension — ізоляція сідниць без навантаження на поперек", weight: [8, 12, 18, "кг"] },
-      { name: "Bulgarian Split Squat", url: `${SITE}one-leg-dumbbell-squat-aka-bulgarian-squat.html`, sets: "2", reps: "10", note: "⚠️ Не грузити максимум — вправа сама по собі брутальна, обережно з вагою", weight: [6, 10, 14, "кг/гант"] },
-      { name: "Leg Press Calf Raise", url: `${SITE}45-degress-calf-press.html`, sets: "2", reps: "15", note: null, weight: [30, 50, 80, "кг"] },
-      { name: "Plank", url: `${SITE}hover.html`, sets: "3", reps: "30s", note: null, weight: null },
-      { name: "Hip Abduction Machine", url: `${SITE}hip-abduction-machine.html`, sets: "3", reps: "12", note: "⚡ Gluteus medius — ключовий м'яз для корекції APT", weight: [20, 30, 45, "кг"] },
+      { zone: "machine", name: "Hack Squat", url: `${SITE}hack-squat.html`, sets: "3", reps: "8-12", note: "🔄 Замість Trap Bar Deadlift — підтримка спини, без осьового навантаження", weight: { start: 20, mid: 40, max: 60, unit: "кг", step: 5 } },
+      { zone: "free", name: "Bulgarian Split Squat", url: `${SITE}one-leg-dumbbell-squat-aka-bulgarian-squat.html`, sets: "2", reps: "8-12", note: "⚠️ Не грузити максимум — вправа сама по собі брутальна, обережно з вагою", weight: { start: 6, mid: 10, max: 14, unit: "кг/гант", step: 2 } },
+      { zone: "machine", name: "Leg Extension", url: `${SITE}leg-extension.html`, sets: "2", reps: "8-12", note: null, weight: { start: 20, mid: 30, max: 45, unit: "кг", step: 2.5 } },
+      { zone: "machine", name: "Seated Leg Curl", url: `${SITE}seated-leg-curl`, sets: "3", reps: "8-12", note: null, weight: { start: 20, mid: 30, max: 45, unit: "кг", step: 2.5 } },
+      { zone: "machine", name: "Hip Abduction Machine", url: `${SITE}hip-abduction-machine.html`, sets: "3", reps: "10-15", note: "⚡ Gluteus medius — ключовий м'яз для корекції APT", weight: { start: 20, mid: 30, max: 45, unit: "кг", step: 2.5 } },
+      { zone: "machine", name: "Leg Press Calf Raise", url: `${SITE}45-degress-calf-press.html`, sets: "2", reps: "12-15", note: null, weight: { start: 30, mid: 50, max: 80, unit: "кг", step: 5 } },
+      { zone: "cable", name: "Cable Kickback", url: `${SITE}glute-kick-back.html`, sets: "2", reps: "10-15", note: "🔄 Замість Hyperextension — ізоляція сідниць без навантаження на поперек", weight: { start: 8, mid: 12, max: 18, unit: "кг", step: 2.5 } },
+      { zone: "floor", name: "Plank", url: `${SITE}hover.html`, sets: "3", reps: "30s", note: null, weight: null },
     ],
     cooldown: [
       { name: "Kneeling Hip Flexor Stretch", url: "https://www.youtube.com/watch?v=Y7gvRhnV3iM&t=195", sets: "2", reps: "45-60s" },
@@ -114,7 +130,11 @@ const TERM_LINKS = {
   "Sumo Deadlift": `${SITE}sumo-deadlift`,
   "Face Pulls": `${SITE}cable-face-pull`,
   "Landmine": `${SITE}single-arm-landmine-press`,
+  "Seated Cable Row": `${SITE}seated-row.html`,
   "Seated": `${SITE}seated-dumbbell-press.html`,
+  "Lat Pulldown": `${SITE}lat-pull-down.html`,
+  "Pallof Press": `${SITE}pallof-press`,
+  "PA12": PA12_URL,
   "мінімум 2:1": `https://missionmvmt.com/push-pull-ratio-prevents-shoulder-injuries/`,
   "Upright Rows": `${SITE}upright-row.html`,
   "Glute Bridge": `${SITE}bodyweight-glute-bridge`,
@@ -156,6 +176,15 @@ function linkify(text) {
 
 const TOTAL_WEEKS = 12;
 
+// Верхня межа діапазону повторень — ціль, після якої додається вага.
+// "8-12" → 12, "30s" → null (там прогресія по часу, не по вазі).
+function topReps(reps) {
+  const range = String(reps).match(/^(\d+)\s*-\s*(\d+)$/);
+  if (range) return parseInt(range[2]);
+  const single = String(reps).match(/^(\d+)$/);
+  return single ? parseInt(single[1]) : null;
+}
+
 const CheckIcon = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
     <path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -169,12 +198,13 @@ export default function WorkoutTracker() {
   const [week, setWeek] = useState(saved?.week ?? 1);
   const [extraSets, setExtraSets] = useState(saved?.extraSets ?? {});
   const [userWeights, setUserWeights] = useState(saved?.userWeights ?? {});
+  const [weightLog, setWeightLog] = useState(saved?.weightLog ?? {});
   const [plankTime, setPlankTime] = useState(30);
   const [plankRunning, setPlankRunning] = useState(false);
 
   useEffect(() => {
-    saveState({ checked, week, extraSets, userWeights });
-  }, [checked, week, extraSets, userWeights]);
+    saveState({ checked, week, extraSets, userWeights, weightLog });
+  }, [checked, week, extraSets, userWeights, weightLog]);
 
   useEffect(() => {
     if (!plankRunning) return;
@@ -194,10 +224,23 @@ export default function WorkoutTracker() {
     setChecked((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const resetAll = () => {
+  const nextWeek = () => {
     setChecked({});
     setExtraSets({});
     setWeek((prev) => Math.min(prev + 1, TOTAL_WEEKS));
+  };
+
+  const resetProgram = () => {
+    const ok = window.confirm(
+      "Почати новий цикл з тижня 1?\n\n" +
+      "Скине: всі відмітки сетів, додані сети, історію ваги по тижнях.\n" +
+      "Залишить: твої робочі ваги в полях вводу."
+    );
+    if (!ok) return;
+    setChecked({});
+    setExtraSets({});
+    setWeightLog({});
+    setWeek(1);
   };
 
   const toggleDay = (idx) => {
@@ -220,6 +263,21 @@ export default function WorkoutTracker() {
     const removedIdx = current - 1;
     setChecked((prev) => { const next = { ...prev }; delete next[`${dayIdx}-${exIdx}-${removedIdx}`]; return next; });
     setExtraSets((prev) => ({ ...prev, [key]: (prev[key] || 0) - 1 }));
+  };
+
+  // Вага пишеться і як "поточна" (переживає ресет), і в лог по тижнях (для порівняння).
+  const setWeightFor = (exName, val) => {
+    setUserWeights((prev) => ({ ...prev, [exName]: val }));
+    setWeightLog((prev) => ({ ...prev, [exName]: { ...(prev[exName] || {}), [week]: val } }));
+  };
+
+  const getPrevWeight = (exName) => {
+    const log = weightLog[exName];
+    if (!log) return null;
+    for (let w = week - 1; w >= 1; w--) {
+      if (log[w] !== undefined && log[w] !== "") return { week: w, value: log[w] };
+    }
+    return null;
   };
 
   const totalSets = program.reduce((s, d, dIdx) =>
@@ -259,8 +317,8 @@ export default function WorkoutTracker() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
-        .wt-header { 
-          margin-bottom: 28px; 
+        .wt-header {
+          margin-bottom: 28px;
           border-bottom: 2px solid rgba(255,255,255,0.08);
           padding-bottom: 20px;
         }
@@ -308,7 +366,6 @@ export default function WorkoutTracker() {
         .wt-week-dot {
           width: 8px;
           height: 8px;
-          border-radius: 50%;
           background: rgba(255,255,255,0.08);
           flex: 1;
           max-width: 20px;
@@ -325,7 +382,7 @@ export default function WorkoutTracker() {
         .wt-stats {
           display: flex;
           align-items: center;
-          gap: 16px;
+          gap: 10px;
           margin-top: 14px;
         }
         .wt-progress-bar {
@@ -354,18 +411,49 @@ export default function WorkoutTracker() {
           font-weight: 600;
           letter-spacing: 1px;
           text-transform: uppercase;
+          background: rgba(58, 111, 216, 0.1);
+          color: #5BA3F5;
+          border: 1px solid rgba(58, 111, 216, 0.25);
+          border-radius: 6px;
+          padding: 8px 14px;
+          cursor: pointer;
+          transition: all 0.2s;
+          white-space: nowrap;
+        }
+        .wt-reset:hover {
+          background: rgba(58, 111, 216, 0.2);
+          border-color: rgba(58, 111, 216, 0.5);
+        }
+        .wt-reset-full {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          text-transform: uppercase;
           background: rgba(232, 85, 58, 0.1);
           color: #E8553A;
           border: 1px solid rgba(232, 85, 58, 0.25);
           border-radius: 6px;
-          padding: 8px 16px;
+          padding: 8px 12px;
           cursor: pointer;
           transition: all 0.2s;
+          white-space: nowrap;
         }
-        .wt-reset:hover {
+        .wt-reset-full:hover {
           background: rgba(232, 85, 58, 0.2);
           border-color: rgba(232, 85, 58, 0.5);
         }
+        .wt-legend {
+          margin-top: 14px;
+          padding: 10px 14px;
+          background: rgba(45, 143, 111, 0.06);
+          border: 1px solid rgba(45, 143, 111, 0.2);
+          border-radius: 8px;
+          font-size: 11px;
+          line-height: 1.6;
+          color: var(--text-secondary, #8a8780);
+        }
+        .wt-legend b { color: #2D8F6F; }
 
         .wt-day {
           margin-bottom: 12px;
@@ -431,10 +519,25 @@ export default function WorkoutTracker() {
           color: #c49538;
         }
 
-        .wt-table {
-          width: 100%;
-          border-collapse: collapse;
+        .wt-zone {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin: 10px 16px 2px;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 1.2px;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.28);
+          user-select: none;
         }
+        .wt-zone::after {
+          content: "";
+          flex: 1;
+          height: 1px;
+          background: rgba(255,255,255,0.06);
+        }
+
         .wt-row {
           display: flex;
           align-items: flex-start;
@@ -601,6 +704,32 @@ export default function WorkoutTracker() {
         .wt-weight-input::placeholder {
           color: rgba(255,255,255,0.15);
         }
+
+        .wt-prog-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-wrap: wrap;
+          margin-top: 5px;
+          font-size: 10px;
+        }
+        .wt-prog-target {
+          color: #2D8F6F;
+          background: rgba(45, 143, 111, 0.1);
+          border: 1px solid rgba(45, 143, 111, 0.2);
+          border-radius: 4px;
+          padding: 2px 6px;
+          font-weight: 600;
+          white-space: nowrap;
+        }
+        .wt-prog-last {
+          color: var(--text-secondary, #8a8780);
+          white-space: nowrap;
+        }
+        .wt-prog-up { color: #2D8F6F; font-weight: 700; }
+        .wt-prog-down { color: #E8553A; font-weight: 700; }
+        .wt-prog-same { color: rgba(255,255,255,0.25); font-weight: 700; }
+
         .wt-note {
           font-size: 11px;
           color: #d4a54a;
@@ -730,7 +859,13 @@ export default function WorkoutTracker() {
             <div className="wt-progress-fill" style={{ width: `${totalSets ? (totalChecked / totalSets) * 100 : 0}%` }} />
           </div>
           <div className="wt-progress-text">{totalChecked}/{totalSets}</div>
-          <button className="wt-reset" onClick={resetAll}>Reset · Week {week < TOTAL_WEEKS ? week + 1 : week}</button>
+          <button className="wt-reset" onClick={nextWeek}>Week {week < TOTAL_WEEKS ? week + 1 : week} →</button>
+          <button className="wt-reset-full" onClick={resetProgram} title="Новий цикл — скидає все, крім робочих ваг">⟲ Новий цикл</button>
+        </div>
+        <div className="wt-legend">
+          <b>Подвійна прогресія.</b> Почни тиждень з нижньої межі діапазону.
+          Коли витягуєш <b>верхню межу у всіх сетах</b> — наступного разу додай крок ваги
+          і повертайся до нижньої межі. Болить плече — просто не додавай, тримай вагу далі.
         </div>
       </div>
 
@@ -757,67 +892,98 @@ export default function WorkoutTracker() {
                   const sets = getEffectiveSets(dayIdx, exIdx, parseInt(ex.sets));
                   const doneSets = getExerciseDone(dayIdx, exIdx, sets);
                   const allDone = doneSets === sets;
+                  const zoneChanged = exIdx === 0 || day.exercises[exIdx - 1].zone !== ex.zone;
+                  const top = topReps(ex.reps);
+                  const prev = ex.weight ? getPrevWeight(ex.name) : null;
+                  const curr = ex.weight ? parseFloat(userWeights[ex.name]) : NaN;
+                  const prevVal = prev ? parseFloat(prev.value) : NaN;
+                  const delta = !isNaN(curr) && !isNaN(prevVal) ? curr - prevVal : null;
                   return (
-                    <div className={`wt-row ${allDone ? "done" : ""}`} key={exIdx}>
-                      <div className="wt-info">
-                        <div className="wt-name">
-                          <a href={ex.url} target="_blank" rel="noopener noreferrer">{ex.name}</a>
-                          <span className="wt-reps-label">× {ex.reps}</span>
-                        </div>
-                        {ex.weight && (
-                          <div className="wt-weight-row">
-                            <div className="wt-weight-hint">
-                              <span className="wt-w-start">{ex.weight[0]}</span>
-                              <span className="wt-w-sep"> · </span>
-                              <span className="wt-w-mid">{ex.weight[1]}</span>
-                              <span className="wt-w-sep"> · </span>
-                              <span className="wt-w-max">{ex.weight[2]}</span>
-                              <span className="wt-w-unit"> {ex.weight[3]}</span>
-                            </div>
-                            <div className="wt-weight-input-wrap">
-                              <input
-                                className="wt-weight-input"
-                                type="text"
-                                inputMode="decimal"
-                                placeholder="—"
-                                value={userWeights[ex.name] || ""}
-                                onChange={(e) => setUserWeights((prev) => ({ ...prev, [ex.name]: e.target.value }))}
-                              />
-                              <span className="wt-w-unit">{ex.weight[3]}</span>
-                            </div>
+                    <div key={exIdx}>
+                      {zoneChanged && <div className="wt-zone">{ZONES[ex.zone]}</div>}
+                      <div className={`wt-row ${allDone ? "done" : ""}`}>
+                        <div className="wt-info">
+                          <div className="wt-name">
+                            <a href={ex.url} target="_blank" rel="noopener noreferrer">{ex.name}</a>
+                            <span className="wt-reps-label">× {ex.reps}</span>
                           </div>
-                        )}
-                        <div className="wt-sets-row">
-                          {Array.from({ length: sets }, (_, setIdx) => {
-                            const isSetDone = !!checked[`${dayIdx}-${exIdx}-${setIdx}`];
-                            return (
-                              <div
-                                key={setIdx}
-                                className={`wt-set-btn ${isSetDone ? "active" : ""}`}
-                                onClick={() => toggleSet(dayIdx, exIdx, setIdx)}
-                              >
-                                {isSetDone ? <CheckIcon /> : setIdx + 1}
+                          {ex.weight && (
+                            <>
+                              <div className="wt-weight-row">
+                                <div className="wt-weight-hint">
+                                  <span className="wt-w-start">{ex.weight.start}</span>
+                                  <span className="wt-w-sep"> · </span>
+                                  <span className="wt-w-mid">{ex.weight.mid}</span>
+                                  <span className="wt-w-sep"> · </span>
+                                  <span className="wt-w-max">{ex.weight.max}</span>
+                                  <span className="wt-w-unit"> {ex.weight.unit}</span>
+                                </div>
+                                <div className="wt-weight-input-wrap">
+                                  <input
+                                    className="wt-weight-input"
+                                    type="text"
+                                    inputMode="decimal"
+                                    placeholder="—"
+                                    value={userWeights[ex.name] || ""}
+                                    onChange={(e) => setWeightFor(ex.name, e.target.value)}
+                                  />
+                                  <span className="wt-w-unit">{ex.weight.unit}</span>
+                                </div>
                               </div>
-                            );
-                          })}
-                          {sets > 1 && <div className="wt-remove-set" onClick={() => removeSet(dayIdx, exIdx, parseInt(ex.sets))}>−</div>}
-                          <div className="wt-add-set" onClick={() => addSet(dayIdx, exIdx)}>+</div>
-                          <span className="wt-sets-label">{doneSets}/{sets}</span>
-                        </div>
-                        {ex.note && <div className="wt-note">{linkify(ex.note)}</div>}
-                        {ex.name === "Plank" && (
-                          <div className="wt-plank-timer">
-                            <span className={`wt-plank-time ${plankTime <= 0 ? "done" : ""}`}>
-                              {plankTime <= 0 ? "✓" : `${plankTime}s`}
-                            </span>
-                            <button className={`wt-plank-btn ${plankRunning ? "running" : ""}`} onClick={togglePlank}>
-                              {plankRunning ? "Stop" : plankTime <= 0 ? "Again" : "Start"}
-                            </button>
-                            {(plankTime < 30 || plankRunning) && (
-                              <button className="wt-plank-reset" onClick={resetPlank} title="Reset">↺</button>
-                            )}
+                              <div className="wt-prog-row">
+                                {top && (
+                                  <span className="wt-prog-target">
+                                    {sets}×{top} → +{ex.weight.step} {ex.weight.unit}
+                                  </span>
+                                )}
+                                {prev && (
+                                  <span className="wt-prog-last">
+                                    тиждень {prev.week}: {prev.value} {ex.weight.unit}
+                                    {delta !== null && (
+                                      <> {delta > 0
+                                        ? <span className="wt-prog-up">↑ +{+delta.toFixed(2)}</span>
+                                        : delta < 0
+                                          ? <span className="wt-prog-down">↓ {+delta.toFixed(2)}</span>
+                                          : <span className="wt-prog-same">=</span>}
+                                      </>
+                                    )}
+                                  </span>
+                                )}
+                              </div>
+                            </>
+                          )}
+                          <div className="wt-sets-row">
+                            {Array.from({ length: sets }, (_, setIdx) => {
+                              const isSetDone = !!checked[`${dayIdx}-${exIdx}-${setIdx}`];
+                              return (
+                                <div
+                                  key={setIdx}
+                                  className={`wt-set-btn ${isSetDone ? "active" : ""}`}
+                                  onClick={() => toggleSet(dayIdx, exIdx, setIdx)}
+                                >
+                                  {isSetDone ? <CheckIcon /> : setIdx + 1}
+                                </div>
+                              );
+                            })}
+                            {sets > 1 && <div className="wt-remove-set" onClick={() => removeSet(dayIdx, exIdx, parseInt(ex.sets))}>−</div>}
+                            <div className="wt-add-set" onClick={() => addSet(dayIdx, exIdx)}>+</div>
+                            <span className="wt-sets-label">{doneSets}/{sets}</span>
                           </div>
-                        )}
+                          {ex.note && <div className="wt-note">{linkify(ex.note)}</div>}
+                          {ex.name === "Plank" && (
+                            <div className="wt-plank-timer">
+                              <span className={`wt-plank-time ${plankTime <= 0 ? "done" : ""}`}>
+                                {plankTime <= 0 ? "✓" : `${plankTime}s`}
+                              </span>
+                              <button className={`wt-plank-btn ${plankRunning ? "running" : ""}`} onClick={togglePlank}>
+                                {plankRunning ? "Stop" : plankTime <= 0 ? "Again" : "Start"}
+                              </button>
+                              {(plankTime < 30 || plankRunning) && (
+                                <button className="wt-plank-reset" onClick={resetPlank} title="Reset">↺</button>
+                              )}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   );
@@ -853,7 +1019,9 @@ export default function WorkoutTracker() {
           • Жими над головою — тільки {linkify("Landmine")} або {linkify("Seated")} з опорою<br />
           • Якщо плече болить при вправі — зупинись і заміни<br />
           • Тяги : Жими = {linkify("мінімум 2:1")}<br />
-          • Ніяких {linkify("Shrugs")} / {linkify("Upright Rows")} — верхня трапеція і так перевантажена
+          • Ніяких {linkify("Shrugs")} / {linkify("Upright Rows")} — верхня трапеція і так перевантажена<br />
+          • Ніяких Dip на {linkify("PA12")} — глибока позиція вантажить передню капсулу плеча<br />
+          • Ніякого навантаженого скручування і нахилу вбік — при S-подібному сколіозі це головне табу
         </div>
       </div>
     </div>
