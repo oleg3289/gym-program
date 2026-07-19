@@ -49,7 +49,7 @@ const program = [
       { zone: "cable", name: "Single Arm Cable Lateral Raise", url: `${SITE}one-arm-cable-lateral-raise.html`, sets: "3", reps: "8-12", note: "🔄 Замість Landmine Press — ізоляція бічної дельти, безпечніше для плеча", weight: { start: 4, mid: 7, max: 10, unit: "кг", step: 1 } },
       { zone: "cable", name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "🔄 Замість Shrug — працює нижня трапеція і зовнішні ротатори", weight: { start: 10, mid: 15, max: 22, unit: "кг", step: 2.5 } },
       { zone: "cable", name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10-15", note: null, weight: { start: 20, mid: 30, max: 45, unit: "кг", step: 2.5 } },
-      { zone: "pa12", name: "Hanging Knee Raise", url: `${SITE}hanging-knee-raise.html`, sets: "3", reps: "10-15", note: "🔄 Замість Roman Chair Twisting Knee Raise — без скручування. Станція Leg Raise на PA12. Вис на поручнях, хребет розвантажений і витягується, коліна строго вгору. Безпечно для сколіозу — нижній прес і згиначі стегна без осьового навантаження.", weight: null },
+      { zone: "cable", name: "Cable Woodchop", url: `${SITE}cable-wood-chop.html`, sets: "3", reps: "10-15", note: "🔄 Блок-станція. Контрольований поворот корпусу — косі м'язи без осьового навантаження на хребет. Рух плавний, без ривка.", weight: { start: 8, mid: 14, max: 20, unit: "кг", step: 2.5 } },
     ],
   },
   {
@@ -91,7 +91,7 @@ const program = [
       { zone: "cable", name: "Cable Face Pull", url: `${SITE}cable-face-pull`, sets: "3", reps: "15-20", note: "⚡ Обов'язково кожен upper day — ключова вправа для твоєї лопатки", weight: { start: 10, mid: 15, max: 22, unit: "кг", step: 2.5 } },
       { zone: "cable", name: "Cable Crunch", url: `${SITE}cable-crunch.html`, sets: "4", reps: "10-15", note: null, weight: { start: 20, mid: 30, max: 45, unit: "кг", step: 2.5 } },
       { zone: "machine", name: "Reverse Pec Deck", url: `${SITE}machine-reverse-fly`, sets: "3", reps: "12-15", note: "🔄 Замість Reverse DB Curl — прямі задні дельти, критично для постави при сколіозі", weight: { start: 15, mid: 25, max: 40, unit: "кг", step: 2.5 } },
-      { zone: "pa12", name: "Hanging Knee Raise", url: `${SITE}hanging-knee-raise.html`, sets: "3", reps: "10-15", note: "🔄 Станція Leg Raise на PA12. Вис на поручнях, хребет розвантажений, коліна строго вгору — без скручування.", weight: null },
+      { zone: "cable", name: "Cable Woodchop", url: `${SITE}cable-wood-chop.html`, sets: "3", reps: "10-15", note: "🔄 Блок-станція. Контрольований поворот корпусу, рух плавний.", weight: { start: 8, mid: 14, max: 20, unit: "кг", step: 2.5 } },
     ],
   },
   {
